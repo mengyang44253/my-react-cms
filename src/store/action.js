@@ -1,15 +1,27 @@
-import {CHANGE_USERINFO,CHANGE_USER_ID,CLEAR_USERINFO} from './actionTypes'
+import store from '@/store'
+
+
+
+import {CHANGE_USERINFO,CHANGE_USER_ID,CLEAR_USERINFO,CHANGE_TOKEN} from './actionTypes'
 
 
 import {
-	getUserInfo
+	getUserInfoByUserId
 } from '@/api/user'
+
+import localCahce from '@/utils/cache'
 
 
 //设置userId
 export const ChangeUserId=(id)=>({
 	type:CHANGE_USER_ID,
-	id:id
+	id
+})
+
+//设置token
+export const changeToken=(token)=>({
+	type:CHANGE_TOKEN,
+	token
 })
 
 //设置用户信息
@@ -18,7 +30,7 @@ export const ChangeUserInfo=(userInfo) => ({
 	userInfo
 })
 
-
+//清除用户信息
 export const ClearUserInfo=()=>({
 	type:CLEAR_USERINFO
 })
@@ -26,12 +38,31 @@ export const ClearUserInfo=()=>({
 //根据id获取用户信息
 export function getUserInfoById(id){
 	return async dispatch=>{
-		let res=await getUserInfo({
+		let res=await getUserInfoByUserId({
 			user_id:id
 		})
 		if(res.success){
+			localCahce.setCache('userInfo',res.data)
 			dispatch(ChangeUserInfo(res.data))
 		}
+	}
+}
+
+
+export function loadLocalLogin(){
+	console.log('从localStorage获取数据')
+	const token=localCahce.getCache('token')
+	console.log(token)
+	if (token) {
+		store.dispatch(changeToken(token))
+	}
+	const user_id=localCahce.getCache('user_id')
+	if (user_id) {
+		store.dispatch(ChangeUserId(user_id))
+	}
+	const userInfo=localCahce.getCache('userInfo')
+	if (userInfo) {
+		store.dispatch(ChangeUserInfo(userInfo))
 	}
 }
 

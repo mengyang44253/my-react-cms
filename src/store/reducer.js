@@ -1,26 +1,29 @@
-import { CHANGE_USERINFO, CHANGE_USER_ID, CLEAR_USERINFO } from "./actionTypes";
+import { CHANGE_USERINFO, CHANGE_USER_ID, CLEAR_USERINFO,CHANGE_TOKEN } from "./actionTypes";
 
 const defaultState = {
 	user_id: null,
 	userInfo: null,
+	token:null
 };
 
 export default (state = defaultState, action) => {
-	let newState = JSON.parse(JSON.stringify(state));
+	console.log(action)
 	switch (action.type) {
 		case CHANGE_USERINFO:
-			newState.userInfo = action.userInfo;
+			state.userInfo = action.userInfo;
 			break;
 		case CHANGE_USER_ID:
-			newState.user_id = action.id;
+			state.user_id = action.id;
 			break;
 		case CLEAR_USERINFO:
-			newState.user_id = null;
-			newState.userInfo =null;
+			state.user_id = null;
+			state.userInfo =null;
 			break;
+		case CHANGE_TOKEN:
+			state.token=action.token
 		default:
-			return newState;
+			return state;
 	}
-	return newState;
+	return state;
 };
 

@@ -24,12 +24,10 @@ export default memo(function RegisterForm(props) {
 	}
 
 	const onFinish = (e) => {
-		console.log(e)
 		setLoading(true)
 		let params={}
 		params.name=e.account
 		params.password=encrypt(e.password)
-		console.log(params)
 		registerUser(params).then(res=>{
 			if (res.success) {
 				message.success('注册成功')
@@ -55,7 +53,6 @@ export default memo(function RegisterForm(props) {
 								let res = await userCheckName({
 									name: value
 								})
-								console.log(res)
 								if (res && res.success) {
 									if (res.data.length) {
 										return Promise.reject("账号已存在");
@@ -109,7 +106,6 @@ export default memo(function RegisterForm(props) {
 						() => ({
 							validator: (rule, value) => {
 								const v = trim(value);
-								console.log(v)
 								if (v) {
 									if (v.toLowerCase() !== codeValue.toLowerCase()) {
 										return Promise.reject("验证码错误");

@@ -1,5 +1,8 @@
 import React,{memo,useState} from 'react'
 
+import LayoutHeader from '@/components/layout/header'
+import LayoutSider from '@/components/layout/sider'
+import LayoutContent from '@/components/layout/content'
 
 import {HomeWrap} from "./style";
 
@@ -17,7 +20,7 @@ export default memo(function Home(){
 	return (
 		<HomeWrap>
 			<Layout className="layout-wrap">
-				<Sider width="256px" className="layout-sider">
+				<Sider width="256px" className="layout-sider" collapsed={collapsed}>
 					<LayoutSider collapsed={collapsed} />
 				</Sider>
 				<Layout>

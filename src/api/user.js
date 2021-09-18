@@ -28,3 +28,12 @@ export function userCheckName(params) {
 		url:"/admin/user/checkName"
 	})
 }
+
+//获取用户信息
+export function getUserInfoByUserId(params){
+	return Http({
+		method:'get',
+		params,
+		url:'/admin/user/getUserInfoById'
+	})
+}
