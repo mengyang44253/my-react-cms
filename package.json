@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.1.10",
     "ali-oss": "^6.16.0",
     "antd": "^4.16.13",
+    "antd-dayjs-webpack-plugin": "^1.0.6",
     "axios": "^0.21.4",
     "babel-plugin-import": "^1.13.3",
     "craco-less": "^1.20.0",

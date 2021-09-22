@@ -8,6 +8,7 @@ specifiers:
   '@testing-library/user-event': ^12.1.10
   ali-oss: ^6.16.0
   antd: ^4.16.13
+  antd-dayjs-webpack-plugin: ^1.0.6
   axios: ^0.21.4
   babel-plugin-import: ^1.13.3
   craco-less: ^1.20.0
@@ -36,6 +37,7 @@ dependencies:
   '@testing-library/user-event': 12.8.3
   ali-oss: 6.16.0
   antd: 4.16.13_react-dom@17.0.2+react@17.0.2
+  antd-dayjs-webpack-plugin: 1.0.6_dayjs@1.10.6
   axios: 0.21.4
   babel-plugin-import: 1.13.3
   craco-less: 1.20.0_08ff56fb5623b679303f90f55ba9b87d
@@ -2953,6 +2955,14 @@ packages:
   /ansi-styles/5.2.0:
     resolution: {integrity: sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==}
     engines: {node: '>=10'}
+    dev: false
+
+  /antd-dayjs-webpack-plugin/1.0.6_dayjs@1.10.6:
+    resolution: {integrity: sha512-UlK3BfA0iE2c5+Zz/Bd2iPAkT6cICtrKG4/swSik5MZweBHtgmu1aUQCHvICdiv39EAShdZy/edfP6mlkS/xXg==}
+    peerDependencies:
+      dayjs: '*'
+    dependencies:
+      dayjs: 1.10.6
     dev: false
 
   /antd/4.16.13_react-dom@17.0.2+react@17.0.2:

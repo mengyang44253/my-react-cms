@@ -8,6 +8,8 @@ import screenfull from "screenfull";
 import {defaultAvatar} from '@/utils/mixin'
 
 import {LayoutHeaderStyle} from '@/views/home/style'
+import EditUserInfo from '@/components/common/editUserInfo'
+import EditPassword from '@/components/common/editPassword'
 
 
 import { Tooltip, Dropdown, Menu,Avatar } from "antd";
@@ -19,6 +21,12 @@ import {
 
 export default memo(function LayoutHeader(props){
 	const userInfo=useSelector(state=>state.userInfo)
+
+	const [infoModal, setInfoModal] = useState(false);
+	const clearUserModal=()=>{
+		setInfoModal(false)
+	}
+
 
 	const toggle=()=>{
 		props.onToggle()
@@ -34,9 +42,20 @@ export default memo(function LayoutHeader(props){
 		}
 	}
 
+	const [passwordModal, setPasswordModal] = useState(false);
+	//关闭修改密码对话框
+	const clearEditPassword=()=>{
+		setPasswordModal(false)
+	}
 
-	const handleCancel=()=>{
+	const handleCancel=({key})=>{
+		if (key === '1') {
+			setInfoModal(true);
+		}else if(key ==='2'){
+			setPasswordModal(true)
+		}else if(key === '3'){
 
+		}
 	}
 
 
@@ -78,6 +97,12 @@ export default memo(function LayoutHeader(props){
 						)
 					}
 				</div>
+				{
+					infoModal?<EditUserInfo infoModal={infoModal} clearUserModal={clearUserModal} />:null
+				}
+				{
+					passwordModal?<EditPassword passwordModal={passwordModal} clearEditPassword={clearEditPassword} />:null
+				}
 			</Fragment>
 	)
 })

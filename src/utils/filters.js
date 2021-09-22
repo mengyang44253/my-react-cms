@@ -93,10 +93,15 @@ export function secondFormat(input, format) {
 
 //获取文件后缀名
 export function getFileType(filePath){
-	let startIndex=filePath.lastIndexof(".")
+	console.log(filePath)
+	let startIndex=filePath.lastIndexOf(".")
 	if(startIndex !== -1){
-		return filePath.substring(startIndex+1,filePath.length).toUpperCase();
+		return filePath.substring(startIndex+1,filePath.length);
 	}else return ""
+}
+//是否是image文件
+export function getFileTypeByType(file){
+	return (file && file.type.substring(0,file.type.indexOf('/')))||''
 }
 
 //获取文件名
@@ -166,3 +171,4 @@ export const fullTextFormat=function (input,length){
 }
 
 export const friendStatusFormat=commonFormat(friendStatus)
+

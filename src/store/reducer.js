@@ -1,5 +1,7 @@
 import { CHANGE_USERINFO, CHANGE_USER_ID, CLEAR_USERINFO,CHANGE_TOKEN } from "./actionTypes";
 
+import LocalCache from '@/utils/cache'
+
 const defaultState = {
 	user_id: null,
 	userInfo: null,
@@ -7,23 +9,24 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
-	console.log(action)
+	let newState=Object.assign({},state)
 	switch (action.type) {
 		case CHANGE_USERINFO:
-			state.userInfo = action.userInfo;
+			newState.userInfo = action.userInfo;
+			LocalCache.setCache('userInfo',action.userInfo)
 			break;
 		case CHANGE_USER_ID:
-			state.user_id = action.id;
+			newState.user_id = action.id;
 			break;
 		case CLEAR_USERINFO:
-			state.user_id = null;
-			state.userInfo =null;
+			newState.user_id = null;
+			newState.userInfo =null;
 			break;
 		case CHANGE_TOKEN:
-			state.token=action.token
+			newState.token=action.token
 		default:
-			return state;
+			return
 	}
-	return state;
+	return {...state,...newState}
 };
 

@@ -18,8 +18,6 @@ export function login(params){
 	})
 }
 
-
-
 //用户名是否重复
 export function userCheckName(params) {
 	return Http({
@@ -37,3 +35,14 @@ export function getUserInfoByUserId(params){
 		url:'/admin/user/getUserInfoById'
 	})
 }
+
+//更新用户信息
+export function updateUserInfo(params){
+	return Http({
+		method:'post',
+		params,
+		url:'/admin/user/updateUserInfo'
+	})
+}
+
+//密码是否正确

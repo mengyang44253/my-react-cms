@@ -1,6 +1,7 @@
 const path=require('path')
 const CracoLessPlugin = require('craco-less');
 const resolve = (dir) => path.resolve(__dirname, dir);
+const AntdDayjsWebpackPlugin =require('antd-dayjs-webpack-plugin');
 
 module.exports = {
 	webpack: {
@@ -8,6 +9,7 @@ module.exports = {
 			"@": resolve("src"),
 			"~": resolve("src")
 		},
+		plugins: [new AntdDayjsWebpackPlugin()],
 	},
 	plugins: [
 		{
