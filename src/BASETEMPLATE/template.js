@@ -1,5 +1,5 @@
 //react引入
-import React,{memo,useState} from 'react'
+import React, {memo, useEffect, useState} from 'react'
 
 //组件引入
 
@@ -27,40 +27,30 @@ export default memo(function $END$ (){
 	const nameChange = (e) => {
 		setName(e.target.value)
 	};
-
-	//表格数据
-	const [showAddBtn, setShowAddBtn] = useState(true);
-
-	const openAddTagModal=()=>{}
-
-
-
-	const [current, setCurrent] = useState(1);
-	const [count, setCount] = useState(0);
-	const [dataSource, setDataSource] = useState([]);
-	const columns=[]
-
-	//页面数据
-	const [addTagModal, setAddTagModal] = useState(false);
-	const [loading, setLoading] = useState(false);
-
-
-
-	//搜索方法
-
-
 	const reset = () => {};
 
 	const search = () => {
 		getList()
 	};
 
-
-
-
-	//表格方法
-	const getList=()=>{}
+	//表格数据
+	const [showAddBtn, setShowAddBtn] = useState(true);
+	const openAddTagModal=()=>{}
+	const [currentPage, setCurrentPage] = useState(1);
+	const [count, setCount] = useState(0);
+	const [dataSource, setDataSource] = useState([]);
+	const columns=[]
 	const currentChange = () => {};
+
+	//页面数据
+	const [addTagModal, setAddTagModal] = useState(false);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(()=>{
+		getList()
+	},[])
+	const getList=()=>{}
+
 
 
 

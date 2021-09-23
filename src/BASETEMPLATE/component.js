@@ -25,26 +25,16 @@ export default memo(function (props) {
 
 
 	//页面数据
-	const [BtnLoading,setBtnLoading]=useState(false)
-
-
+	const [btnLoading,setBtnLoading]=useState(false)
 	const handleCancel=()=>{
 
 	}
-
 	const handleOk=()=>{
 
 	}
 
 	return (
-			<Modal title="添加Tag" visible={} onOk={handleOk} onCancel={handleCancel} footer={[
-				<Button key="back" onClick={handleCancel}>
-					取消
-				</Button>,
-				<Button key="submit" type="primary" loading={BtnLoading} onClick={handleOk}>
-					保存
-				</Button>
-			]}>
+			<Modal title="添加Tag" visible={} onOk={handleOk} onCancel={handleCancel} width={400} confirmLoading={btnLoading}>
 
 			</Modal>
 	)
