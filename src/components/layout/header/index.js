@@ -11,6 +11,8 @@ import {LayoutHeaderStyle} from '@/views/home/style'
 import EditUserInfo from '@/components/common/editUserInfo'
 import EditPassword from '@/components/common/editPassword'
 
+import localCache from '@/utils/cache'
+
 
 import { Tooltip, Dropdown, Menu,Avatar } from "antd";
 import {
@@ -21,6 +23,8 @@ import {
 
 export default memo(function LayoutHeader(props){
 	const userInfo=useSelector(state=>state.userInfo)
+
+	const history=useHistory()
 
 	const [infoModal, setInfoModal] = useState(false);
 	const clearUserModal=()=>{
@@ -54,7 +58,8 @@ export default memo(function LayoutHeader(props){
 		}else if(key ==='2'){
 			setPasswordModal(true)
 		}else if(key === '3'){
-
+			localCache.clearCache()
+			history.push("/login")
 		}
 	}
 

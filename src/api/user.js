@@ -46,3 +46,28 @@ export function updateUserInfo(params){
 }
 
 //密码是否正确
+export function checkPasswordCorrect(params) {
+	return Http({
+		method:'get',
+		params,
+		url:'/admin/user/checkPassword'
+	})
+}
+
+//密码是否重复
+export function passwordIsRepeat(params) {
+	return Http({
+		method:'get',
+		params,
+		url:'/admin/user/repeatPassword'
+	})
+}
+
+//修改密码
+export function updateNewPassword(params) {
+	return Http({
+		method:'post',
+		params,
+		url:'/admin/user/updatePassword'
+	})
+}
