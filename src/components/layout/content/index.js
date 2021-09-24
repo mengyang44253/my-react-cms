@@ -8,6 +8,8 @@ import Front from '@/views/home/home'
 import User from '@/views/system/user'
 import Role from '@/views/system/role'
 
+import Friend from '@/views/friend'
+
 
 export default function LayoutContent() {
 	return (
@@ -15,6 +17,7 @@ export default function LayoutContent() {
 			<PrivateRouter exact path="/home" component={Front} />
 			<PrivateRouter wxact path="/home/system/user" component={User} />
 			<PrivateRouter exact path="/home/system/role" component={Role} />
+			<PrivateRouter exact path="/home/friend" component={Friend} />
 		</Switch>
 	)
 }

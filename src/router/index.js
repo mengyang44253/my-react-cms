@@ -10,7 +10,8 @@ import {
 	WhatsAppOutlined,
 	UsergroupAddOutlined,
 	BoxPlotOutlined,
-	UpSquareOutlined
+	UpSquareOutlined,
+	CopyOutlined
 } from "@ant-design/icons";
 
 const Router = [
@@ -18,6 +19,28 @@ const Router = [
 		title: "首页",
 		icon: <HomeOutlined/>,
 		path: "/home",
+	},
+	{
+		title:"文章管理",
+		icon:<CopyOutlined />,
+		path:'/home/article',
+		children:[
+			{
+				title:'新建文章',
+				path:'/home/article/addArticle'
+			},
+			{
+				title:'文章列表',
+				path:'/home/article/articleList'
+			},
+			{
+				title:'编辑文章',
+				path:'/home/article/editArticle'
+			},
+			{
+				title:''
+			}
+		]
 	},
 	{
 		title: "系统管理",
@@ -36,6 +59,11 @@ const Router = [
 			},
 		],
 	},
+	{
+		title: "友链管理",
+		icon:<BookOutlined/>,
+		path:"/home/friend"
+	}
 
 ]
 

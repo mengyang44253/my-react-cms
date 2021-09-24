@@ -19,7 +19,7 @@ import {
 } from "@ant-design/icons";
 
 
-export default memo(function (props) {
+export default memo(function AddFriend (props) {
 
 	const {} =props
 
@@ -34,8 +34,9 @@ export default memo(function (props) {
 	}
 
 	return (
-			<Modal title="添加Tag" visible={} onOk={handleOk} onCancel={handleCancel} width={400} confirmLoading={btnLoading}>
+		<Modal title="添加Tag" visible={} onOk={handleOk} onCancel={handleCancel} width={400} confirmLoading={btnLoading}>
 
-			</Modal>
+		</Modal>
 	)
 })
+

@@ -1,7 +1,8 @@
-import React, {memo, useState} from "react";
+import React, {memo, useState,useEffect} from "react";
 
 import {
-	addRole
+	addRole,
+	editRole
 } from '@/api/system'
 
 import {
@@ -13,7 +14,7 @@ import {
 const { TextArea } = Input;
 
 export default memo(function AddRole(props) {
-	console.log(props)
+	const {currentData}=props
 	const [form] = Form.useForm();
 	const layout={
 		labelCol: {span: 5},
@@ -21,22 +22,46 @@ export default memo(function AddRole(props) {
 	}
 
 	const [btnLoading,setBtnLoading]=useState(false)
+	const [modalTitle,setModalTitle]=useState('')
 
+	useEffect(()=>{
+		if (currentData.id) {
+			form.setFieldsValue({
+				roleName:currentData.name,
+				desc:currentData.desc
+			})
+			setModalTitle('修改角色')
+		}else{
+			setModalTitle('添加角色')
+		}
+	},[currentData,form])
 
 
 
 	const handleOk=()=>{
 		form.validateFields().then(async (values)=>{
-			console.log(values)
 			setBtnLoading(true)
 			let params={}
 			params.name=values.roleName
 			if (values.desc) {
 				params.desc=values.desc
 			}
-			let res=await addRole(params)
+			if (currentData.id) {
+				params.id=currentData.id
+			}
+			console.log(params)
+			let res
+			if (currentData.id) {
+				res=await editRole(params)
+			}else{
+				res=await addRole(params)
+			}
 			if(res.success){
-				message.success('添加成功')
+				if (currentData.id) {
+					message.success('修改成功')
+				}else{
+					message.success('添加成功')
+				}
 				setBtnLoading(false)
 				props.closeRoleModal(1)
 			}else{
@@ -52,7 +77,7 @@ export default memo(function AddRole(props) {
 	}
 
 	return (
-		<Modal title="添加角色" visible={props.addRoleModal} onCancel={handleCancel} onOk={handleOk} width={500} confirmLoading={btnLoading}>
+		<Modal title={modalTitle} visible={props.addRoleModal} onCancel={handleCancel} onOk={handleOk} width={500} confirmLoading={btnLoading}>
 			<Form {...layout} form={form}>
 				<Form.Item name='roleName' label='角色名' rules={[
 					{

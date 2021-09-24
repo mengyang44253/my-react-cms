@@ -9,16 +9,16 @@ const { Option } = Select;
 export default function CountrySelect (props) {
   const {defaultCountry} =props
   const [value,setValue]=useState(defaultCountry)
-  const [countryList,setcountryList] =useState([])
+  const [countryList,setCountryList] =useState([])
 
   useEffect(()=>{
     let countryList=getCountryList().concat([])
-    setcountryList(countryList)
+    setCountryList(countryList)
   },[])
 
   const selectCountry=(value)=>{
     setValue(value)
-    props.counrtyChange(value)
+    props.countryChange(value)
   }
 
   return (

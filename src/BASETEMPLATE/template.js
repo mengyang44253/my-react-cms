@@ -1,17 +1,15 @@
 //react引入
-import React,{memo,useState} from 'react'
+import React, {memo, useEffect, useState} from 'react'
 
 //组件引入
-
 
 
 //方法引入
 
 
-
 //antd引入
 import {
-	Button,
+	Button, Col, Input, Row,
 	Spin
 } from "antd";
 
@@ -20,7 +18,7 @@ import {
 } from "@ant-design/icons";
 
 
-export default memo(function $END$ (){
+export default memo(function $END$() {
 	//搜索数据
 	const [name, setName] = useState("");
 
@@ -28,66 +26,83 @@ export default memo(function $END$ (){
 		setName(e.target.value)
 	};
 
+	const [time,setTime]=useState([])
+	const timeChange=(date)=>{
+		setTime(date)
+	}
+	const reset = () => {
+		setName("")
+		setTime([])
+	};
+
+	const search = () => {
+		setCurrentPage(1)
+		getList()
+	};
+
 	//表格数据
 	const [showAddBtn, setShowAddBtn] = useState(true);
 
-	const openAddTagModal=()=>{}
-
-
-
-	const [current, setCurrent] = useState(1);
+	const openAddTagModal = () => {
+	}
+	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [dataSource, setDataSource] = useState([]);
-	const columns=[]
+	const columns = []
+	const currentChange = () => {
+	};
 
 	//页面数据
 	const [addTagModal, setAddTagModal] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-
-
-	//搜索方法
-	const reset = () => {};
-
-	const search = () => {
+	useEffect(() => {
 		getList()
-	};
-
-
-
-
-	//表格方法
-	const getList=()=>{}
-	const currentChange = () => {};
-
-
-
-
+	}, [])
+	const getList = () => {
+	}
 
 
 	return (
-			<div>
-				<div className="filter-content">
-
-				</div>
-				<div className="table-content">
-					<div className="add">
-						{showAddBtn ? (
-								<Button
-										type="dashed"
-										icon={<PlusOutlined />}
-										onClick={openAddTagModal}
-								>
-									添加
-								</Button>
-						) : null}
-					</div>
-
-				</div>
-				<div className="footer-content">
-
-				</div>
-				<Spin className="loading" size="large" spinning={loading} />
+		<div>
+			<div className="filter-content">
+				<Row gutter={16}>
+					<Col span={5}>
+						<div>
+							<Input placeholder="请输入角色名" onChange={nameChange}/>
+						</div>
+					</Col>
+					<Col span={5}>
+						<div>
+							<RangePicker value={time} onChange={timeChange}/>
+						</div>
+					</Col>
+					<Col span={4} offset={10}>
+						<div>
+							<Button className="fr resetBtn" onClick={reset}>重置</Button>
+							<Button className="fr" type="primary" onClick={search}>搜索</Button>
+						</div>
+					</Col>
+				</Row>
 			</div>
+			<div className="table-content">
+				<div className="add">
+					{showAddBtn ? (
+						<Button
+							type="dashed"
+							icon={<PlusOutlined/>}
+							onClick={openAddTagModal}
+						>
+							添加
+						</Button>
+					) : null}
+				</div>
+
+			</div>
+			<div className="footer-content">
+
+			</div>
+			<Spin className="loading" size="large" spinning={loading}/>
+		</div>
 	)
 })
