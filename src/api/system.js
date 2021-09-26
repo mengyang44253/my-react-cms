@@ -53,3 +53,30 @@ export function getAuthByRoleId(params) {
 		url:'/admin/sys/role/getAuth'
 	})
 }
+
+//用户列表
+export function getUserList(params) {
+	return Http({
+		method:'post',
+		params,
+		url:"/admin/sys/user/list"
+	})
+}
+
+//用户修改权限
+export function editUserRoleAuth(params) {
+	return Http({
+		method:"post",
+		params,
+		url:'/admin/sys/user/userRole'
+	})
+}
+
+//删除某一个用户
+export function deletedSomeUser(params){
+	return Http({
+		method:'get',
+		params,
+		url:'/admin/sys/user/deleteUser'
+	})
+}

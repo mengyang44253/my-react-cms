@@ -61,3 +61,15 @@ export const friendStatus=[
 		label: "审核拒绝"
 	}
 ]
+
+//性别
+export const genderStatus=[
+	{
+		value:1,
+		label:"男"
+	},
+	{
+		value:2,
+		label:"女"
+	},
+]

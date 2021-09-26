@@ -1,7 +1,7 @@
 
 import dayjs from "dayjs";
 import {ArticleStatus,articleCommentStatus} from '@/utils/enumValue'//获取文章状态
-import {friendStatus} from './enumValue'//友链状态
+import {friendStatus,genderStatus} from './enumValue'//友链状态
 
 
 //公共过滤器,用于生成不同的过滤器
@@ -171,4 +171,7 @@ export const fullTextFormat=function (input,length){
 }
 
 export const friendStatusFormat=commonFormat(friendStatus)
+
+//性别
+export const genderFormat=commonFormat(genderStatus)
 
