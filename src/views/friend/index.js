@@ -2,7 +2,7 @@
 import React, {memo, useEffect, useState} from 'react'
 
 //组件引入
-
+import AddFriend from '@/components/friend/addFriend'
 
 //方法引入
 
@@ -42,11 +42,18 @@ export default memo(function Friend() {
 
 	//表格数据
 	const [showAddBtn, setShowAddBtn] = useState(true);
-	const openAddTagModal = () => {
+	const openAddModal = () => {
+		setAddFriend(true)
 	}
 	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [dataSource, setDataSource] = useState([]);
+	const [addFriend,setAddFriend]=useState(false)
+
+	const closeAddFriend=()=>{
+		setAddFriend(false)
+	}
+
 	const columns =  [
 		{
 			title: "网站名",
@@ -112,7 +119,7 @@ export default memo(function Friend() {
 						<Button
 							type="dashed"
 							icon={<PlusOutlined/>}
-							onClick={openAddTagModal}
+							onClick={openAddModal}
 						>
 							添加
 						</Button>
@@ -132,6 +139,9 @@ export default memo(function Friend() {
 				/>
 			</div>
 			<Spin className="loading" size="large" spinning={loading}/>
+			{
+				addFriend?<AddFriend addFriend={addFriend} closeAddFriend={closeAddFriend} />:null
+			}
 		</div>
 	)
 })
