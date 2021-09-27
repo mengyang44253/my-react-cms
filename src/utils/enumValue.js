@@ -49,15 +49,15 @@ export const articleCommentStatus=[
 //友链状态
 export const friendStatus=[
 	{
-		value:0,
+		value:1,
 		label:'待审核'
 	},
 	{
-		value:1,
+		value:2,
 		label:"审核通过"
 	},
 	{
-		value:2,
+		value:3,
 		label: "审核拒绝"
 	}
 ]

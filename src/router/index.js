@@ -37,9 +37,6 @@ const Router = [
 				title:'编辑文章',
 				path:'/home/article/editArticle'
 			},
-			{
-				title:''
-			}
 		]
 	},
 	{
@@ -64,7 +61,6 @@ const Router = [
 		icon:<BookOutlined/>,
 		path:"/home/friend"
 	}
-
 ]
 
 

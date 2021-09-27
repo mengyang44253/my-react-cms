@@ -209,6 +209,7 @@ export default memo(function Role() {
 		}
 	}
 	const currentChange = () => {
+		getList()
 	};
 
 	useEffect(() => {
