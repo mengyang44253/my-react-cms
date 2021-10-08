@@ -208,7 +208,8 @@ export default memo(function Role() {
 			setLoading(false)
 		}
 	}
-	const currentChange = () => {
+	const currentChange = (value) => {
+		setCurrentPage(value)
 		getList()
 	};
 

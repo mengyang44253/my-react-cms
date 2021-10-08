@@ -2,7 +2,7 @@
 import React, {memo, useEffect, useState} from 'react'
 
 //组件引入
-
+import AddDirectory from '@/components/article/addDirectory'
 
 //方法引入
 
@@ -12,19 +12,19 @@ import {
 	Button,
 	Col,
 	DatePicker,
-	Input,
+	Input, Pagination,
 	Row,
-	Spin
+	Spin, Table,
 } from "antd";
 
 import {
 	PlusOutlined
 } from "@ant-design/icons";
+import {secondFormat} from "../../utils/filters";
 
 const {RangePicker} = DatePicker;
 
-
-export default memo(function $END$() {
+export default memo(function Directory() {
 	//搜索数据
 	const [name, setName] = useState("");
 
@@ -32,8 +32,8 @@ export default memo(function $END$() {
 		setName(e.target.value)
 	};
 
-	const [time,setTime]=useState([])
-	const timeChange=(date)=>{
+	const [time, setTime] = useState([])
+	const timeChange = (date) => {
 		setTime(date)
 	}
 	const reset = () => {
@@ -53,17 +53,39 @@ export default memo(function $END$() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [dataSource, setDataSource] = useState([]);
-	const columns = []
+	const columns = [
+		{
+			title:'目录名',
+			dataIndex:'name',
+			key:'name'
+		},
+		{
+			title:'标签文章总和',
+			dataIndex: "group_count",
+			key:'group_count'
+		},
+		{
+			title:'创建时间',
+			dataIndex:"create_time",
+			key:"create_time",
+			render:(text)=>{
+				return secondFormat(text)
+			}
+		},
+		{
+			
+		}
+	]
 	const currentChange = () => {
 	};
 
 	//页面数据
-	const [addModal, setAddModal] = useState(false);
-	const openAddModal = () => {
-		setAddModal(true)
+	const [addTagModal, setAddTagModal] = useState(false);
+	const openAddTagModal = () => {
+		setAddTagModal(true)
 	}
-	const closeModal=(value)=>{
-		setAddModal(false)
+	const closeModal = (value) => {
+		setAddTagModal(false)
 		if (value) {
 			getList()
 		}
@@ -105,18 +127,29 @@ export default memo(function $END$() {
 						<Button
 							type="dashed"
 							icon={<PlusOutlined/>}
-							onClick={openAddModal}
+							onClick={openAddTagModal}
 						>
 							添加
 						</Button>
 					) : null}
 				</div>
-
+				<div className="table-wrap">
+					<Table scorll={{x: 1500, scrollToFirstRowOnChange: true, y: 300}} bordered dataSource={dataSource}
+								 columns={columns} pagination={false}/>
+				</div>
 			</div>
 			<div className="footer-content">
-
+				<Pagination
+					size="small"
+					current={currentPage}
+					total={count}
+					onChange={currentChange}
+				/>
 			</div>
 			<Spin className="loading" size="large" spinning={loading}/>
+			{
+				addTagModal ? <AddDirectory addTagModal={addTagModal} closeModal={closeModal}/> : null
+			}
 		</div>
 	)
 })

@@ -37,6 +37,14 @@ const Router = [
 				title:'编辑文章',
 				path:'/home/article/editArticle'
 			},
+			{
+				title:'标签管理',
+				path:'/home/article/tag'
+			},
+			{
+				title:'目录管理',
+				path:'/home/article/directory'
+			}
 		]
 	},
 	{
