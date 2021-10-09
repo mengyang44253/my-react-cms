@@ -4,6 +4,7 @@ import { Switch,Route } from "react-router-dom";
 
 import PrivateRouter from '@/components/PrivateRouter'
 
+import AddArticle from '@/views/article/addArticle'
 import Tag from '@/views/article/tag'
 import Directory from '@/views/article/directory'
 
@@ -19,7 +20,7 @@ export default function LayoutContent() {
 		<Switch>
 			<PrivateRouter exact path="/home" component={Front} />
 
-
+			<PrivateRouter exact path="/home/article/addArticle" component={AddArticle} />
 			<PrivateRouter exact path="/home/article/tag" component={Tag} />
 			<PrivateRouter exact path="/home/article/directory" component={Directory} />
 

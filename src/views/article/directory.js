@@ -1,10 +1,16 @@
 //react引入
 import React, {memo, useEffect, useState} from 'react'
+import dayjs from 'dayjs';
 
 //组件引入
 import AddDirectory from '@/components/article/addDirectory'
 
 //方法引入
+import {
+	directoryList,
+	deletedSomeDirectory
+} from '@/api/label'
+
 
 
 //antd引入
@@ -12,15 +18,22 @@ import {
 	Button,
 	Col,
 	DatePicker,
-	Input, Pagination,
+	Input,
+	Pagination,
+	Popconfirm,
 	Row,
-	Spin, Table,
+	Spin,
+	Table,
+	Tooltip,
+	message
 } from "antd";
 
 import {
+	DeleteOutlined,
 	PlusOutlined
 } from "@ant-design/icons";
 import {secondFormat} from "../../utils/filters";
+
 
 const {RangePicker} = DatePicker;
 
@@ -73,10 +86,35 @@ export default memo(function Directory() {
 			}
 		},
 		{
-			
+			title:'操作',
+			dataIndex: 'handle',
+			key:'handle',
+			render:(text,row)=>{
+				return (
+					<div>
+						<Popconfirm title="确认删除吗？" okText="确认" cancelText="取消" onConfirm={()=>deleteItem(row)}>
+                <span className="control-btn red">
+                  <Tooltip placement="top" title="删除">
+                  <DeleteOutlined twoToneColor="#ff3333" />
+                </Tooltip>
+                </span>
+						</Popconfirm>
+					</div>
+				)
+			}
 		}
 	]
-	const currentChange = () => {
+	const deleteItem=async (value)=>{
+		let params={}
+		params.id=value.id
+		let res=await deletedSomeDirectory(params)
+		if (res.success) {
+			message.success("删除成功")
+			getList()
+		}
+	}
+	const currentChange = (value) => {
+		setCurrentPage(value)
 	};
 
 	//页面数据
@@ -94,8 +132,32 @@ export default memo(function Directory() {
 
 	useEffect(() => {
 		getList()
-	}, [])
-	const getList = () => {
+	}, [currentPage])
+	const getList =async  () => {
+		setLoading(true)
+		console.log(currentPage)
+		let params = {}
+		params.pagination = 1
+		params.limit = 10
+		params.start = currentPage - 1
+		if (name) {
+			params.name=name
+		}
+		if (time.length) {
+			params.start_time=dayjs(time[0]).unix()
+			params.end_time=dayjs(time[1]).unix()
+		}
+		let res=await directoryList(params)
+		if (res.success) {
+			setLoading(false)
+			res.data.forEach(item=>{
+				item.key=item.id
+			})
+			setDataSource(res.data)
+			setCount(res.count)
+		}else{
+			setLoading(false)
+		}
 	}
 
 
