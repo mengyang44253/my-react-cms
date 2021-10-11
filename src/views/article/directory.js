@@ -135,7 +135,6 @@ export default memo(function Directory() {
 	}, [currentPage])
 	const getList =async  () => {
 		setLoading(true)
-		console.log(currentPage)
 		let params = {}
 		params.pagination = 1
 		params.limit = 10

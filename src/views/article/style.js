@@ -12,7 +12,7 @@ export const AddArticleWrap=styled.div`
 	.content-wrap{
 		display: flex;
 		.left{
-      width: 800px;
+      min-width: 800px;
 			.title-wrap{
         margin-bottom: 10px;
 			}

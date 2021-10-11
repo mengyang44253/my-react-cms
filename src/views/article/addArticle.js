@@ -14,13 +14,24 @@ import "react-markdown-editor-lite/lib/index.css";
 import MarkdownIt from "markdown-it";
 
 //方法引入
-
+import {
+	tagList,
+	directoryList
+} from '@/api/label'
+import {
+	addArticle
+} from '@/api/article'
+import {
+	tree
+} from '@/utils'
 
 //antd引入
 import {
 	Select,
 	Input,
-	Button, Tree
+	Button,
+	Tree,
+	message
 } from 'antd'
 
 import {
@@ -37,6 +48,7 @@ export default  memo(function AddArticle() {
 
 
 	//页面数据
+	const history = useHistory();
 	const [inputValue,setInputValue]=useState(null)
 	const titleChange=(e)=>{
 		setInputValue(e.target.value)
@@ -47,21 +59,92 @@ export default  memo(function AddArticle() {
 	}
 	const [btnLoading,setBtnLoading]=useState(false)
 
-	const publish=(value)=>{
 
-	}
 
 	const [directoryData, setDirectoryData] = useState([]);
+	const getDirectoryList=()=>{
+		directoryList().then(res=>{
+			console.log(res)
+			let data=tree(res.data)
+			console.log(data)
+			data.forEach(ee=>{
+				ee.title=ee.name
+				ee.key=ee.id
+				if (ee.children) {
+					ee.disabled=true
+					ee.children.forEach(eee=>{
+						eee.title=eee.name
+						eee.key=eee.id
+					})
+				}
+			})
+			console.log(data)
+			setDirectoryData(data)
+		})
+	}
 	const [selectDirectory, setSelectDirectory] = useState([]);
 	const selectSomeDirectory = (checkedKeysValue) => {
 		setSelectDirectory(checkedKeysValue)
 	}
 	const [tagData, setTagData] = useState([]);
+	const getTagList=()=>{
+		console.log(111)
+		tagList().then(res=>{
+			console.log(res)
+			if (res.success) {
+				res.data.forEach(item=>{
+					item.key=item.id
+				})
+				setTagData(res.data)
+			}
+		})
+	}
 	const [selectTag, setSelectTag] = useState([]);
 	const tagSelectSome = (value) => {
 		setSelectTag(value)
 	}
 
+	//获取数据
+	useEffect(()=>{
+		getDirectoryList()
+		getTagList()
+	},[])
+	const userInfo = useSelector(state => state.userInfo)
+
+	const publish=async (value)=>{
+		if (!inputValue) {
+			message.warning('标题不能为空')
+			return
+		}
+		if (!mdValue) {
+			message.warning('请输入内容')
+			return
+		}
+		if (selectDirectory.length === 0) {
+			message.warning('请选择分类目录')
+			return
+		}
+		if (selectTag.length === 0) {
+			message.warning('请选择标签')
+			return
+		}
+		setBtnLoading(true)
+		let params={}
+		params.title=inputValue
+		params.content=mdValue
+		params.directory=selectDirectory.join(",")
+		params.tag=selectTag.join(",")
+		params.author=userInfo.user_id
+		params.status=value
+		let res= await addArticle(params)
+		if (res.success) {
+			setBtnLoading(false)
+			message.success("添加文章成功")
+			history.push("/home/article/articleList")
+		}else{
+			setBtnLoading(false)
+		}
+	}
 
 	return (
 		<AddArticleWrap>
@@ -95,9 +178,9 @@ export default  memo(function AddArticle() {
 						<div className="directory-title">目录</div>
 						<div>
 							{
-								directoryData.length&&(
+								directoryData.length?(
 									<Tree checkable defaultExpandAll={true} onCheck={selectSomeDirectory} treeData={directoryData} />
-								)
+								):null
 							}
 						</div>
 					</div>
