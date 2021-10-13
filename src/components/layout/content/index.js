@@ -5,6 +5,8 @@ import { Switch,Route } from "react-router-dom";
 import PrivateRouter from '@/components/PrivateRouter'
 
 import AddArticle from '@/views/article/addArticle'
+import ArticleList from '@/views/article/articleList'
+import EditArticle from '@/views/article/editArticle'
 import Tag from '@/views/article/tag'
 import Directory from '@/views/article/directory'
 
@@ -21,14 +23,14 @@ export default function LayoutContent() {
 			<PrivateRouter exact path="/home" component={Front} />
 
 			<PrivateRouter exact path="/home/article/addArticle" component={AddArticle} />
+			<PrivateRouter exact path="/home/article/articleList" component={ArticleList} />
+			<PrivateRouter exact path="/home/article/editArticle/:id" component={EditArticle} />
 			<PrivateRouter exact path="/home/article/tag" component={Tag} />
 			<PrivateRouter exact path="/home/article/directory" component={Directory} />
 
 
 			<PrivateRouter exact path="/home/system/user" component={User} />
 			<PrivateRouter exact path="/home/system/role" component={Role} />
-
-
 
 
 			<PrivateRouter exact path="/home/friend" component={Friend} />

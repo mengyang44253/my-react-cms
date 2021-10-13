@@ -53,7 +53,6 @@ export default memo(function Tag() {
 
 	const search = () => {
 		setCurrentPage(1)
-		getList()
 	};
 
 	//表格数据
@@ -113,7 +112,6 @@ export default memo(function Tag() {
 	}
 	const currentChange = (value) => {
 		setCurrentPage(value)
-		getList()
 	};
 
 	//页面数据
@@ -131,7 +129,7 @@ export default memo(function Tag() {
 
 	useEffect(() => {
 		getList()
-	}, [])
+	}, [currentPage])
 	const getList = async () => {
 		setLoading(true)
 		let params={}
@@ -165,7 +163,7 @@ export default memo(function Tag() {
 				<Row gutter={16}>
 					<Col span={5}>
 						<div>
-							<Input placeholder="请输入标签名" onChange={nameChange}/>
+							<Input placeholder="请输入标签名" value={name} onChange={nameChange}/>
 						</div>
 					</Col>
 					<Col span={5}>

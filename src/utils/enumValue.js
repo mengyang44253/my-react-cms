@@ -37,7 +37,7 @@ export const CommentStatus=[
 //文章是否可以被评论
 export const articleCommentStatus=[
 	{
-		value:0,
+		value:2,
 		label:'不允许'
 	},
 	{

@@ -170,6 +170,7 @@ export const fullTextFormat=function (input,length){
 	return result
 }
 
+//友链状态
 export const friendStatusFormat=commonFormat(friendStatus)
 
 //性别

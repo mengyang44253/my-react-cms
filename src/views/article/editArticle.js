@@ -19,7 +19,8 @@ import {
 	directoryList
 } from '@/api/label'
 import {
-	addArticle
+	editArticle,
+	getArticleDetailById
 } from '@/api/article'
 import {
 	tree
@@ -44,9 +45,8 @@ const mdParser = new MarkdownIt()
 
 
 
-export default  memo(function AddArticle() {
-
-
+export default  memo(function EditArticle() {
+	const mdEditors = React.useRef(null);
 	//页面数据
 	const history = useHistory();
 	const [inputValue,setInputValue]=useState(null)
@@ -54,13 +54,12 @@ export default  memo(function AddArticle() {
 		setInputValue(e.target.value)
 	}
 	const [mdValue, setMdValue] = useState("");
-	const [mdHtml,setMdHtml]=useState("")
+	const [contentHtml,setContentHtml]=useState("")
 	const handleEditorChange=({html,text})=>{
 		setMdValue(text)
-		setMdHtml(html)
+		setContentHtml(html)
 	}
 	const [btnLoading,setBtnLoading]=useState(false)
-
 
 
 	const [directoryData, setDirectoryData] = useState([]);
@@ -85,12 +84,12 @@ export default  memo(function AddArticle() {
 		})
 	}
 	const [selectDirectory, setSelectDirectory] = useState([]);
+	const [defaultDirectory,setDefaultDirectory]=useState([])
 	const selectSomeDirectory = (checkedKeysValue) => {
 		setSelectDirectory(checkedKeysValue)
 	}
 	const [tagData, setTagData] = useState([]);
 	const getTagList=()=>{
-		console.log(111)
 		tagList().then(res=>{
 			console.log(res)
 			if (res.success) {
@@ -108,9 +107,30 @@ export default  memo(function AddArticle() {
 
 	//获取数据
 	useEffect(()=>{
+		getDetail()
 		getDirectoryList()
 		getTagList()
 	},[])
+	const id=history.location.pathname.split('/').pop()
+	const [detail,setDetail]=useState(null)
+	const getDetail=async ()=>{
+		let params={}
+		params.id=id
+		let res=await getArticleDetailById(params)
+		if (res.success) {
+			setDetail(res.data)
+			setInputValue(res.data.title)
+			setMdValue(res.data.content)
+			setContentHtml(res.data.content_html)
+			mdEditors.current.setText(res.data.content)
+			let directory=res.data.label_data.filter(item=>item.type ===2).map(item=>item.id)
+			setDefaultDirectory(directory)
+			setSelectDirectory(directory)
+			let tag=res.data.label_data.filter(item=>item.type ===1).map(item=>item.id)
+
+			setSelectTag(tag)
+		}
+	}
 	const userInfo = useSelector(state => state.userInfo)
 
 	const publish=async (value)=>{
@@ -132,17 +152,17 @@ export default  memo(function AddArticle() {
 		}
 		setBtnLoading(true)
 		let params={}
+		params.id=detail.id
 		params.title=inputValue
 		params.content=mdValue
-		params.content_html=mdHtml
+		params.content_html=contentHtml
 		params.directory=selectDirectory.join(",")
 		params.tag=selectTag.join(",")
-		params.author=userInfo.user_id
 		params.status=value
-		let res= await addArticle(params)
+		let res= await editArticle(params)
 		if (res.success) {
 			setBtnLoading(false)
-			message.success("添加文章成功")
+			message.success("修改文章成功")
 			history.push("/home/article/articleList")
 		}else{
 			setBtnLoading(false)
@@ -151,7 +171,7 @@ export default  memo(function AddArticle() {
 
 	return (
 		<AddArticleWrap>
-			<div className="name">添加文章</div>
+			<div className="name">修改文章</div>
 			<div className="content-wrap clearfix">
 				<div className="left">
 					<div className="title-wrap">
@@ -162,6 +182,7 @@ export default  memo(function AddArticle() {
 					</div>
 					<div className="md">
 						<MdEditor
+							ref={mdEditors}
 							style={{height: "600px", width: "1050px"}}
 							renderHTML={(text) => mdParser.render(text)}
 							onChange={handleEditorChange}
@@ -170,11 +191,8 @@ export default  memo(function AddArticle() {
 				</div>
 				<div className="right">
 					<div className="btn mb50 tc">
-						<Button className="mr20" loading={btnLoading} onClick={()=>publish(1)}>
-							存为草稿
-						</Button>
 						<Button loading={btnLoading} type="primary" onClick={()=>publish(2)}>
-							发布
+							保存
 						</Button>
 					</div>
 					<div className="directory mb50">
@@ -182,7 +200,7 @@ export default  memo(function AddArticle() {
 						<div>
 							{
 								directoryData.length?(
-									<Tree checkable defaultExpandAll={true} onCheck={selectSomeDirectory} treeData={directoryData} />
+									<Tree checkable defaultExpandAll={true} onCheck={selectSomeDirectory} treeData={directoryData} defaultCheckedKeys={defaultDirectory} />
 								):null
 							}
 						</div>
@@ -190,7 +208,7 @@ export default  memo(function AddArticle() {
 					<div className="tag mb50">
 						<div className="tag-title">标签</div>
 						<div>
-							<Select style={{width:"200px"}} mode="tags" placeholder="标签" onChange={tagSelectSome}>
+							<Select style={{width:"200px"}} mode="tags" placeholder="标签" onChange={tagSelectSome} value={selectTag}>
 								{
 									tagData.length && tagData.map(item=>{
 										return (

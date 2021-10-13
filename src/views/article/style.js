@@ -11,8 +11,10 @@ export const AddArticleWrap=styled.div`
 	}
 	.content-wrap{
 		display: flex;
+		min-width:1300px;
+		overflow-x: scroll;
 		.left{
-      min-width: 800px;
+      width: 1050px;
 			.title-wrap{
         margin-bottom: 10px;
 			}
@@ -40,3 +42,5 @@ export const AddArticleWrap=styled.div`
 		}
 	}
 `
+
+export const EditArticleWrap=styled.div``

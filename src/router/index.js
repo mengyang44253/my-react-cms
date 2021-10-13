@@ -34,10 +34,6 @@ const Router = [
 				path:'/home/article/articleList'
 			},
 			{
-				title:'编辑文章',
-				path:'/home/article/editArticle'
-			},
-			{
 				title:'标签管理',
 				path:'/home/article/tag'
 			},

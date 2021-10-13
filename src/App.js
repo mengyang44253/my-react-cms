@@ -21,7 +21,7 @@ function App() {
 					<Switch>
 						<Route exact path='/login' render={()=><Login />} />
 						<PrivateRouter path="/home" component={Home} />
-						<Redirect from='/' to='/login' />
+						<Redirect from='/' to='/home' />
 					</Switch>
 				</BrowserRouter>
 			</ConfigProvider>
