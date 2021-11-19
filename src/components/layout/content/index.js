@@ -10,11 +10,14 @@ import EditArticle from '@/views/article/editArticle'
 import Tag from '@/views/article/tag'
 import Directory from '@/views/article/directory'
 
+import Comment from '@/views/comment/index'
+
+import Friend from '@/views/friend'
+
 import Front from '@/views/home/home'
 import User from '@/views/system/user'
 import Role from '@/views/system/role'
 
-import Friend from '@/views/friend'
 
 
 export default function LayoutContent() {
@@ -28,12 +31,14 @@ export default function LayoutContent() {
 			<PrivateRouter exact path="/home/article/tag" component={Tag} />
 			<PrivateRouter exact path="/home/article/directory" component={Directory} />
 
+			<PrivateRouter exact path="/home/comment" component={Comment} />
+
+			<PrivateRouter exact path="/home/friend" component={Friend} />
 
 			<PrivateRouter exact path="/home/system/user" component={User} />
 			<PrivateRouter exact path="/home/system/role" component={Role} />
 
 
-			<PrivateRouter exact path="/home/friend" component={Friend} />
 		</Switch>
 	)
 }

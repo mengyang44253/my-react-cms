@@ -44,6 +44,16 @@ const Router = [
 		]
 	},
 	{
+		title: "评论管理",
+		icon:<BarChartOutlined/>,
+		path:"/home/comment"
+	},
+	{
+		title: "友链管理",
+		icon:<BookOutlined/>,
+		path:"/home/friend"
+	},
+	{
 		title: "系统管理",
 		icon: <RobotOutlined/>,
 		path: "/home/system",
@@ -59,11 +69,6 @@ const Router = [
 				path: "/home/system/role",
 			},
 		],
-	},
-	{
-		title: "友链管理",
-		icon:<BookOutlined/>,
-		path:"/home/friend"
 	}
 ]
 
