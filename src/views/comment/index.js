@@ -1,5 +1,5 @@
 //react引入
-import React, {memo, useEffect, useState} from 'react'
+import React, {Fragment, memo, useEffect, useState} from 'react'
 
 //组件引入
 
@@ -11,13 +11,14 @@ import React, {memo, useEffect, useState} from 'react'
 import {
 	Button,
 	Col,
-	DatePicker,
-	Input,
+	DatePicker, Divider, Image,
+	Input, Pagination, Popconfirm,
 	Row,
-	Spin
+	Spin, Table, Tooltip
 } from "antd";
 
 import {
+	AuditOutlined, DeleteOutlined, EditOutlined,
 	PlusOutlined
 } from "@ant-design/icons";
 
@@ -47,13 +48,15 @@ export default memo(function $END$() {
 	};
 
 	//表格数据
-	const [showAddBtn, setShowAddBtn] = useState(true);
 
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [dataSource, setDataSource] = useState([]);
-	const columns = []
+
+	const columns = [
+	];
+
 	const currentChange = () => {
 	};
 
@@ -100,21 +103,23 @@ export default memo(function $END$() {
 				</Row>
 			</div>
 			<div className="table-content">
-				<div className="add">
-					{showAddBtn ? (
-						<Button
-							type="dashed"
-							icon={<PlusOutlined/>}
-							onClick={openAddModal}
-						>
-							添加
-						</Button>
-					) : null}
+				<div className="table-wrap">
+					<Table
+						scorll={{ x: 1500, scrollToFirstRowOnChange: true, y: 300 }}
+						bordered
+						dataSource={dataSource}
+						columns={columns}
+						pagination={false}
+					/>
 				</div>
-
 			</div>
 			<div className="footer-content">
-
+				<Pagination
+					size="small"
+					current={currentPage}
+					total={count}
+					onChange={currentChange}
+				/>
 			</div>
 			<Spin className="loading" size="large" spinning={loading}/>
 		</div>
